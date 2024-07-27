@@ -31,6 +31,7 @@ import landing from "assets/brand/landing.webp";
 import greenBg from "assets/brand/green_bg.png";
 import { PIXEL_SCALE } from "features/game/lib/constants";
 import classNames from "classnames";
+import { Garden, GardenContainer } from "features/garden/Garden";
 
 // Lazy load routes
 const World = lazy(() =>
@@ -204,6 +205,11 @@ export const Navigation: React.FC = () => {
                   <Route
                     path="/visit/*"
                     element={<LandExpansion key="visit" />}
+                  />
+
+                  <Route
+                    path="/garden/*"
+                    element={<GardenContainer key="visit" />}
                   />
 
                   {CONFIG.NETWORK === "amoy" && (

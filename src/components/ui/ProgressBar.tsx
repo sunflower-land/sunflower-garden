@@ -199,7 +199,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
 }) => {
   return (
     <div className="absolute" {...divProps}>
-      {seconds > 0 && (
+      {/* {seconds > 0 && (
         <div
           className="flex justify-center absolute w-full pointer-events-none z-30"
           style={{
@@ -224,7 +224,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
             })}
           </span>
         </div>
-      )}
+      )} */}
 
       <div className="absolute">
         <Bar percentage={percentage} type={type} />

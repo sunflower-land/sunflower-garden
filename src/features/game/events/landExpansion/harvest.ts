@@ -13,6 +13,8 @@ import {
   trackActivity,
 } from "features/game/types/bumpkinActivity";
 import { CropPlot } from "features/game/types/game";
+import { SELLABLE } from "./sellCrop";
+import { getSellPrice } from "features/game/expansion/lib/boosts";
 
 export type LandExpansionHarvestAction = {
   type: "crop.harvested";
@@ -77,7 +79,7 @@ export function harvest({
   action,
   createdAt = Date.now(),
 }: Options): GameState {
-  const stateCopy = cloneDeep(state);
+  const stateCopy = cloneDeep(state) as GameState;
   const { bumpkin, crops: plots } = stateCopy;
 
   if (!bumpkin) {
@@ -96,7 +98,7 @@ export function harvest({
 
   const { name: cropName, plantedAt, amount = 1, reward } = plot.crop;
 
-  const { harvestSeconds } = CROPS()[cropName];
+  const { harvestSeconds, sellPrice } = CROPS()[cropName];
 
   if (createdAt - plantedAt < harvestSeconds * 1000) {
     throw new Error("Not ready");
@@ -106,17 +108,36 @@ export function harvest({
 
   bumpkin.activity = trackActivity(activityName, bumpkin.activity);
 
+  const sellables = SELLABLE[plot.crop.name];
+  const price = getSellPrice({
+    item: sellables,
+    game: stateCopy,
+    now: new Date(createdAt),
+  });
+
+  const coinsEarned = price;
+  bumpkin.activity = trackActivity(
+    "Coins Earned",
+    bumpkin.activity,
+    new Decimal(coinsEarned),
+  );
+
+  stateCopy.coins = stateCopy.coins + coinsEarned;
+
+  // Increase XP
+  bumpkin.experience += sellPrice;
+
   // Remove crop data for plot
   delete plot.crop;
 
   delete plot.fertiliser;
 
-  const cropCount = stateCopy.inventory[cropName] || new Decimal(0);
+  // const cropCount = stateCopy.inventory[cropName] || new Decimal(0);
 
-  stateCopy.inventory = {
-    ...stateCopy.inventory,
-    [cropName]: cropCount.add(amount),
-  };
+  // stateCopy.inventory = {
+  //   ...stateCopy.inventory,
+  //   [cropName]: cropCount.add(amount),
+  // };
 
   return stateCopy;
 }

@@ -336,8 +336,13 @@ import {
   SkipKingdomChoreAction,
 } from "./landExpansion/skipKingdomChore";
 import { leaveFaction, LeaveFactionAction } from "./landExpansion/leaveFaction";
+import {
+  upgradeGarden,
+  UpgradeGardenAction,
+} from "./landExpansion/upgradeGarden";
 
 export type PlayingEvent =
+  | UpgradeGardenAction
   | OilGreenhouseAction
   | HarvestGreenhouseAction
   | PlantGreenhouseAction
@@ -500,6 +505,7 @@ type Handlers<T> = {
 };
 
 export const PLAYING_EVENTS: Handlers<PlayingEvent> = {
+  "garden.upgraded": upgradeGarden,
   "faction.left": leaveFaction,
   "faction.prizeClaimed": claimFactionPrize,
   "greenhouse.oiled": oilGreenhouse,

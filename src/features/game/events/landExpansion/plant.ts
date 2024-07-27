@@ -20,7 +20,7 @@ import {
   isCollectibleBuilt,
 } from "features/game/lib/collectibleBuilt";
 import { setPrecision } from "lib/utils/formatNumber";
-import { SEEDS } from "features/game/types/seeds";
+import { SeedName, SEEDS } from "features/game/types/seeds";
 import { BuildingName } from "features/game/types/buildings";
 import { isWithinAOE } from "features/game/expansion/placeable/lib/collisionDetection";
 import {
@@ -39,6 +39,7 @@ import {
 import { getBumpkinLevel } from "features/game/lib/level";
 import { isBuildingEnabled } from "features/game/expansion/lib/buildingRequirements";
 import { isWearableActive } from "features/game/lib/wearables";
+import { getBuyPrice } from "./seedBought";
 
 export type LandExpansionPlantAction = {
   type: "seed.planted";
@@ -594,7 +595,7 @@ export function plant({
   action,
   createdAt = Date.now(),
 }: Options): GameState {
-  const stateCopy = cloneDeep(state);
+  const stateCopy = cloneDeep(state) as GameState;
   const { crops: plots, bumpkin, inventory } = stateCopy;
   const buds = stateCopy.buds ?? {};
 
@@ -624,11 +625,11 @@ export function plant({
     throw new Error("Not a seed");
   }
 
-  const seedCount = inventory[action.item] || new Decimal(0);
+  // const seedCount = inventory[action.item] || new Decimal(0);
 
-  if (seedCount.lessThan(1)) {
-    throw new Error("Not enough seeds");
-  }
+  // if (seedCount.lessThan(1)) {
+  //   throw new Error("Not enough seeds");
+  // }
 
   const cropName = action.item.split(" ")[0] as CropName;
 
@@ -659,7 +660,17 @@ export function plant({
     },
   };
 
-  inventory[action.item] = seedCount.sub(1);
+  // inventory[action.item] = seedCount.sub(1);
+
+  // Check they have money
+  const price = getBuyPrice(
+    action.item as SeedName,
+    SEEDS()[action.item as SeedName],
+    inventory,
+    stateCopy,
+  );
+
+  stateCopy.coins = stateCopy.coins - price;
 
   return stateCopy;
 }

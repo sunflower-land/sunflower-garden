@@ -86,16 +86,16 @@ export const CROPS: () => Record<CropName, Crop> = () => ({
   Sunflower: {
     name: "Sunflower",
     description: translate("description.sunflower"),
-    sellPrice: 0.02,
+    sellPrice: 2,
     bumpkinLevel: 1,
-    harvestSeconds: 1 * 60,
+    harvestSeconds: 3,
   },
   Potato: {
     name: "Potato",
     description: translate("description.potato"),
-    sellPrice: 0.14,
+    sellPrice: 14,
     bumpkinLevel: 1,
-    harvestSeconds: 5 * 60,
+    harvestSeconds: 10,
   },
   Pumpkin: {
     name: "Pumpkin",
@@ -187,9 +187,9 @@ export type CropSeedName = `${CropName} Seed`;
 
 export const CROP_SEEDS: () => Record<CropSeedName, Seed> = () => ({
   "Sunflower Seed": {
-    price: 0.01,
+    price: 1,
     description: translate("description.sunflower"),
-    plantSeconds: 60,
+    plantSeconds: 10,
     bumpkinLevel: 1,
     yield: "Sunflower",
     plantingSpot: "Crop Plot",
@@ -197,7 +197,7 @@ export const CROP_SEEDS: () => Record<CropSeedName, Seed> = () => ({
   "Potato Seed": {
     price: 0.1,
     description: translate("description.potato"),
-    plantSeconds: 5 * 60,
+    plantSeconds: 20,
     bumpkinLevel: 1,
     yield: "Potato",
     plantingSpot: "Crop Plot",

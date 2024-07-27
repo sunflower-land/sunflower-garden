@@ -323,7 +323,7 @@ export const Plot: React.FC<Props> = ({ id, index }) => {
       </Transition>
 
       <div onClick={() => onClick()} className="w-full h-full relative">
-        {harvestCount < 3 &&
+        {/* {harvestCount < 3 &&
           harvestCount + 1 === Number(id) &&
           !!inventory.Shovel && (
             <img
@@ -336,8 +336,8 @@ export const Plot: React.FC<Props> = ({ id, index }) => {
                 top: `${PIXEL_SCALE * -14}px`,
               }}
             />
-          )}
-
+          )} */}
+        {/* 
         {plantCount < 3 && plantCount + 1 === Number(id) && soldCount > 0 && (
           <img
             className="absolute cursor-pointer group-hover:img-highlight z-30 animate-pulsate"
@@ -349,7 +349,7 @@ export const Plot: React.FC<Props> = ({ id, index }) => {
               top: `${PIXEL_SCALE * 6}px`,
             }}
           />
-        )}
+        )} */}
 
         <FertilePlot
           cropName={crop?.name}

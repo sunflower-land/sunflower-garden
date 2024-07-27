@@ -4,7 +4,7 @@ import React, { createContext, useEffect } from "react";
 
 const getScaleLimits = () => {
   const minScale = 0.5;
-  const maxScale = 1;
+  const maxScale = 2;
 
   return { minScale, maxScale };
 };

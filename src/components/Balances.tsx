@@ -10,28 +10,15 @@ import { SUNNYSIDE } from "assets/sunnyside";
 import classNames from "classnames";
 
 interface Props {
-  sfl: Decimal;
   coins: number;
-  blockBucks: Decimal;
-  onClick?: () => void;
 }
 
-export const Balances: React.FC<Props> = ({
-  sfl,
-  coins,
-  blockBucks,
-  onClick,
-}) => {
-  const [showFullBalance, setShowFullBalance] = useState(false);
-
+export const Balances: React.FC<Props> = ({ coins }) => {
   return (
     <>
-      <div className="flex flex-col absolute space-y-1 items-end z-50 right-3 top-3 !text-[28px] text-stroke">
-        <div
-          className="flex cursor-pointer items-center space-x-3 relative"
-          onClick={onClick}
-        >
-          <div className="h-9 w-full bg-black opacity-30 absolute coins-bb-hud-backdrop" />
+      <div className="flex flex-col absolute space-y-1 items-end z-50 right-0 top-2  text-stroke">
+        <div className="flex cursor-pointer items-center space-x-3 relative">
+          <div className="h-14 w-full bg-black opacity-30 absolute coins-bb-hud-backdrop" />
           {/* Coins */}
           <div className="flex items-center space-x-2">
             <span className="balance-text mt-0.5">
@@ -45,48 +32,6 @@ export const Balances: React.FC<Props> = ({
               }}
             />
           </div>
-          <div className="flex items-center space-x-2">
-            <span className="balance-text mt-0.5">{blockBucks.toString()}</span>
-            <img
-              src={blockBucksIcon}
-              alt="Block Bucks"
-              style={{
-                marginTop: 2,
-                width: 28,
-              }}
-            />
-          </div>
-          <img
-            src={SUNNYSIDE.ui.add_button}
-            className="absolute"
-            style={{
-              width: 20,
-              right: -8,
-              top: -4,
-            }}
-          />
-        </div>
-        {/* SFL */}
-        <div
-          className={classNames("flex items-center space-x-2 relative", {
-            // show cursor if balance has a decimal place
-            "cursor-pointer": sfl.toNumber() % 1 !== 0,
-          })}
-          onClick={() => setShowFullBalance(!showFullBalance)}
-        >
-          <div className="h-9 w-full bg-black opacity-25 absolute sfl-hud-backdrop -z-10" />
-          <span className="balance-text">
-            {showFullBalance
-              ? setPrecision(sfl, 8).toString()
-              : setPrecision(sfl).toString()}
-          </span>
-          <img
-            src={sflIcon}
-            alt="SFL"
-            style={{
-              width: 26,
-            }}
-          />
         </div>
       </div>
     </>

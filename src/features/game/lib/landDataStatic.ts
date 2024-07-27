@@ -25,7 +25,26 @@ export const INITIAL_RESOURCES: Pick<
   crops: {
     1: {
       createdAt: Date.now(),
-      x: -2,
+      x: -1,
+      y: 0,
+      height: 1,
+      width: 1,
+      crop: {
+        name: "Sunflower",
+        plantedAt: 0,
+        amount: 1,
+      },
+    },
+    2: {
+      createdAt: Date.now(),
+      x: 0,
+      y: 0,
+      height: 1,
+      width: 1,
+    },
+    3: {
+      createdAt: Date.now(),
+      x: 1,
       y: 0,
       height: 1,
       width: 1,
@@ -324,7 +343,7 @@ export const STATIC_OFFLINE_FARM: GameState = {
       type: "Woodlands",
     },
   },
-  coins: 10,
+  coins: 1000,
   balance: new Decimal(100.1023810291823),
   previousBalance: new Decimal(0),
   previousInventory: {

@@ -95,10 +95,10 @@ const FertilePlotComponent: React.FC<Props> = ({
 
   const handleMouseEnter = () => {
     // show details if field is growing
-    if (isGrowing) {
-      // set state to show details
-      setShowTimerPopover(true);
-    }
+    // if (isGrowing) {
+    //   // set state to show details
+    //   setShowTimerPopover(true);
+    // }
   };
 
   const handleMouseLeave = () => {

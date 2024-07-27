@@ -14,6 +14,11 @@ export type Position = {
 
 type Props = Position;
 
+// const OFFSET_X = -22;
+// export const OFFSET_Y = 22;
+const OFFSET_X = 0;
+export const OFFSET_Y = 0;
+
 /**
  * This component is used to place items on the map. It uses the cartesian place coordinates
  * as the basis for its positioning. If the coordinates are 1,1 then the item will be placed one
@@ -31,8 +36,8 @@ export const MapPlacement: React.FC<Props> = ({
     <div
       className={"absolute"}
       style={{
-        top: `calc(50% - ${GRID_WIDTH_PX * y}px)`,
-        left: `calc(50% + ${GRID_WIDTH_PX * x}px)`,
+        top: `calc(50% - ${GRID_WIDTH_PX * y + OFFSET_Y}px)`,
+        left: `calc(50% + ${GRID_WIDTH_PX * x + OFFSET_X}px)`,
         height: height ? `${GRID_WIDTH_PX * height}px` : "auto",
         width: width ? `${GRID_WIDTH_PX * width}px` : "auto",
         zIndex: z,

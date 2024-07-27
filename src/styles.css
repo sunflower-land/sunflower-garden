@@ -431,10 +431,10 @@ img {
 }
 
 .coins-bb-hud-backdrop {
-  height: 19px;
-  width: 88%;
-  left: -1px;
-  top: 6px;
+  height: 30px;
+  width: 100%;
+  right: 0;
+  top: 0px;
   -webkit-mask-image: linear-gradient(
     90deg,
     rgba(0, 0, 0, 0) 0%,
@@ -445,13 +445,16 @@ img {
 }
 
 .balance-text {
+  position: relative;
+  top: 4px;
+  margin-right: 2px;
   color: white;
   /* text-shadow: 1px 1px black; */
-  font-family: "Secondary";
+  font-family: "Teeny";
   /* paint-order: stroke;
   -webkit-text-stroke: 3px black; */
   letter-spacing: 1px;
-  font-size: 28px !important;
+  font-size: 18px !important;
 
   text-shadow:
     -1px -1px 0 black,
