@@ -20,6 +20,7 @@ import { useAppTranslation } from "lib/i18n/useAppTranslations";
 import { getImageUrl } from "lib/utils/getImageURLS";
 import { ITEM_ICONS } from "features/island/hud/components/inventory/Chest";
 import { translateTerms } from "lib/i18n/translate";
+import { COLLECTIBLE_BUFF_LABELS } from "features/game/types/collectibleItemBuffs";
 
 /**
  * The props for the details for items.
@@ -222,13 +223,14 @@ export const CraftingRequirements: React.FC<Props> = ({
   };
 
   const getBoost = () => {
+    const boost = COLLECTIBLE_BUFF_LABELS[details?.item as InventoryItemName];
     if (!boost) return <></>;
 
     return (
       <div className="flex flex-col space-y-1 mb-2">
         <div className="flex justify-start sm:justify-center">
-          <Label type="info" className="text-center">
-            {boost}
+          <Label type="info" icon={boost.boostTypeIcon} className="text-center">
+            {boost.shortDescription}
           </Label>
         </div>
       </div>

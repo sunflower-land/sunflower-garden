@@ -150,63 +150,26 @@ export type CraftableCollectible = {
   to?: Date;
 };
 
-export const HELIOS_BLACKSMITH_ITEMS: (
-  game?: GameState,
-  date?: Date,
-) => Partial<Record<HeliosBlacksmithItem, CraftableCollectible>> = (
-  state,
-  date = new Date(),
-) => ({
+export const HELIOS_BLACKSMITH_ITEMS: () => Partial<
+  Record<HeliosBlacksmithItem, CraftableCollectible>
+> = () => ({
   "Basic Scarecrow": {
     description: translate("description.basic.scarecrow"),
     boost: translate("description.basic.scarecrow.boost"),
-    coins: 0,
-    ingredients: {
-      Wood: new Decimal(2),
-    },
+    coins: 100,
+    ingredients: {},
   },
   "Scary Mike": {
     description: translate("description.scary.mike"),
     boost: translate("description.scary.mike.boost"),
-    coins: 4800,
-    ingredients: {
-      Wood: new Decimal(30),
-      Carrot: new Decimal(50),
-      Wheat: new Decimal(10),
-      Parsnip: new Decimal(10),
-    },
+    coins: 200,
+    ingredients: {},
   },
   "Laurie the Chuckle Crow": {
     description: translate("description.laurie.chuckle.crow"),
     boost: translate("description.laurie.chuckle.crow.boost"),
-    coins: 14400,
-    ingredients: {
-      Wood: new Decimal(100),
-      Radish: new Decimal(60),
-      Kale: new Decimal(40),
-      Wheat: new Decimal(20),
-    },
-  },
-  Bale: {
-    description: translate("description.bale"),
-    boost: translate("description.bale.boost"),
-    coins: 1600,
-    ingredients: {
-      Egg: new Decimal(200),
-      Wheat: new Decimal(200),
-      Wood: new Decimal(100),
-      Stone: new Decimal(30),
-    },
-  },
-  "Immortal Pear": {
-    description: translate("description.immortal.pear"),
-    boost: translate("description.immortal.pear.boost"),
-    ingredients: {
-      Gold: new Decimal(5),
-      Apple: new Decimal(10),
-      Blueberry: new Decimal(10),
-      Orange: new Decimal(10),
-    },
+    coins: 300,
+    ingredients: {},
   },
 });
 

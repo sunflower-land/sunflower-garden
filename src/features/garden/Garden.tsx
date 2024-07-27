@@ -29,6 +29,7 @@ import { DirtRenderer } from "features/game/expansion/components/DirtRenderer";
 import { getGameGrid } from "features/game/expansion/placeable/lib/makeGrid";
 import { GardenUpgrade } from "./components/GardenUpgrade";
 import { Modal } from "components/ui/Modal";
+import { BasicScarecrow } from "features/island/collectibles/components/BasicScarecrow";
 
 export const GardenContainer: React.FC = () => {
   // catching and passing scroll container to keyboard listeners
@@ -59,7 +60,8 @@ export const Garden: React.FC = () => {
 
   const [showUpgrade, setShowUpgrade] = useState(false);
 
-  const crops = gameState.context.state.crops;
+  const state = gameState.context.state;
+  const crops = state.crops;
 
   const [scrollIntoView] = useScrollIntoView();
 
@@ -108,6 +110,12 @@ export const Garden: React.FC = () => {
           onClick={() => setShowUpgrade(true)}
         />
       </MapPlacement>
+
+      {state.inventory["Basic Scarecrow"] && (
+        <MapPlacement x={0} y={3} height={2} width={2}>
+          <BasicScarecrow />
+        </MapPlacement>
+      )}
 
       {getKeys(crops)
         .sort((a, b) => crops[b].y - crops[a].y)
