@@ -31,10 +31,41 @@ const UPGRADES: GardenUpgrade[] = [
     ],
     coins: 200,
   },
+  {
+    plots: [
+      { x: -2, y: -1 },
+      { x: -2, y: 0 },
+      { x: -2, y: 1 },
+
+      { x: -3, y: -1 },
+      { x: -3, y: 0 },
+      { x: -3, y: 1 },
+    ],
+    coins: 500,
+  },
+  {
+    plots: [
+      { x: -3, y: -2 },
+      { x: -2, y: -2 },
+      { x: -1, y: -2 },
+      { x: 0, y: -2 },
+      { x: 1, y: -2 },
+    ],
+    coins: 500,
+  },
 ];
 
 export function getNextUpgrade({ game }: { game: GameState }) {
-  return UPGRADES[0];
+  let initialCount = getKeys(INITIAL_FARM.crops).length;
+  let cropCount = getKeys(game.crops).length;
+
+  return UPGRADES.find((_, index) => {
+    const total = UPGRADES.slice(0, index + 1).reduce((total, upgrade) => {
+      return total + upgrade.plots.length;
+    }, initialCount);
+
+    return total > cropCount;
+  });
 }
 
 export type UpgradeGardenAction = {
@@ -67,7 +98,7 @@ export function upgradeGarden({
   // Add plots
   upgrade.plots.forEach((plot, index) => {
     const crops = getKeys(game.crops).length;
-    game.crops[crops + index + 1] = {
+    game.crops[crops + 2] = {
       x: plot.x,
       y: plot.y,
       createdAt,
@@ -80,6 +111,8 @@ export function upgradeGarden({
       },
     };
   });
+
+  console.log({ cropKeys: getKeys(game.crops) });
 
   // Subtract coins
   game.coins -= upgrade.coins;

@@ -88,7 +88,7 @@ export const CROPS: () => Record<CropName, Crop> = () => ({
     description: translate("description.sunflower"),
     sellPrice: 2,
     bumpkinLevel: 1,
-    harvestSeconds: 3,
+    harvestSeconds: 10,
   },
   Potato: {
     name: "Potato",

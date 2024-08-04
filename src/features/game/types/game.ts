@@ -71,6 +71,7 @@ import { TradeableName } from "../actions/sellMarketResource";
 import { MinigameCurrency } from "../events/minigames/purchaseMinigameItem";
 import { FactionShopCollectibleName, FactionShopFoodName } from "./factionShop";
 import { DiggingFormationName } from "./desert";
+import { LabPlantName, SproutName } from "./labPlants";
 
 export type Reward = {
   coins?: number;
@@ -344,6 +345,7 @@ export type WarItems =
   | "Warrior Pants";
 
 export type InventoryItemName =
+  | SproutName
   | CropName
   | CropSeedName
   | BeanName
@@ -512,6 +514,16 @@ export type CropPlot = {
   fertiliser?: CropFertiliser;
   createdAt: number;
 } & Position;
+
+export type LabPlant = {
+  name: LabPlantName;
+  plantedAt: number;
+  events: { name: "sprout.watered"; createdAt: number }[];
+};
+
+export type LabPot = {
+  plant?: LabPlant;
+} & Coordinates;
 
 export type GreenhousePlant = {
   name: GreenHouseCropName | GreenHouseFruitName;
@@ -1158,6 +1170,8 @@ export interface GameState {
   oilReserves: Record<string, OilReserve>;
 
   crops: Record<string, CropPlot>;
+  pots: Record<string, LabPot>;
+
   greenhouse: {
     oil: number;
     pots: Record<string, GreenhousePot>;

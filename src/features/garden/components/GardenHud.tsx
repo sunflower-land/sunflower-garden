@@ -20,6 +20,7 @@ import {
   getBumpkinLevel,
   getExperienceToNextLevel,
 } from "features/game/lib/level";
+import { CROP_SEEDS, CropName } from "features/game/types/crops";
 const _xp = (state: MachineState) =>
   state.context.state.bumpkin?.experience ?? 0;
 
@@ -47,12 +48,6 @@ const HudComponent: React.FC<{
 
   let percent = currentExperienceProgress / experienceToNextLevel;
 
-  console.log({
-    percent,
-    currentExperienceProgress,
-    experienceToNextLevel,
-    experience,
-  });
   const level = getBumpkinLevel(
     gameState.context.state.bumpkin?.experience ?? 0,
   );
@@ -121,12 +116,18 @@ const HudComponent: React.FC<{
           }}
         >
           {shortcuts.map((item, index) => {
-            const crop = SEEDS()[item as SeedName]?.yield;
+            let name = item;
+
+            // Show the crop image instead
+            if (item in CROP_SEEDS()) {
+              name = SEEDS()[item as SeedName].yield as CropName;
+            }
+
             return (
               <Box
                 key={index}
                 isSelected={index === 0}
-                image={ITEM_DETAILS[crop]?.image}
+                image={ITEM_DETAILS[name]?.image}
                 onClick={() => shortcutItem(item)}
               />
             );

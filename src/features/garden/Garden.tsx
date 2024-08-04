@@ -6,16 +6,15 @@ import React, {
   useState,
 } from "react";
 
-// import bg from "assets/ui/5x5_grass_bg.png";
 import bg from "assets/garden/2x2.png";
-import dirt from "assets/garden/dirt_3x3.png";
 import upgradeBoard from "assets/garden/upgrade_board.webp";
-
+import greenhouse from "src/assets/buildings/greenhouse.webp";
+import lock from "assets/icons/lock.png";
 import { PIXEL_SCALE } from "features/game/lib/constants";
 
 import ScrollContainer from "react-indiana-drag-scroll";
 
-import { useParams } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { GameBoard } from "components/GameBoard";
 import { Context, GameProvider } from "features/game/GameProvider";
 import { ModalProvider } from "features/game/components/modal/ModalProvider";
@@ -30,6 +29,7 @@ import { getGameGrid } from "features/game/expansion/placeable/lib/makeGrid";
 import { GardenUpgrade } from "./components/GardenUpgrade";
 import { Modal } from "components/ui/Modal";
 import { BasicScarecrow } from "features/island/collectibles/components/BasicScarecrow";
+import { Labratory } from "./Labratory";
 
 export const GardenContainer: React.FC = () => {
   // catching and passing scroll container to keyboard listeners
@@ -46,11 +46,25 @@ export const GardenContainer: React.FC = () => {
           ignoreElements={"*[data-prevent-drag-scroll]"}
         >
           <GameBoard>
-            <Garden />
+            <Game />
           </GameBoard>
         </ScrollContainer>
       </ModalProvider>
     </GameProvider>
+  );
+};
+
+const Game: React.FC = () => {
+  return (
+    <>
+      <div className="absolute w-full h-full z-10">
+        <Routes>
+          <Route path="/" element={<Garden />} />
+          <Route path="/labratory" element={<Labratory />} />
+        </Routes>
+        <GardenHud isFarming location="farm" />
+      </div>
+    </>
   );
 };
 
@@ -62,6 +76,8 @@ export const Garden: React.FC = () => {
 
   const state = gameState.context.state;
   const crops = state.crops;
+
+  const navigate = useNavigate();
 
   const [scrollIntoView] = useScrollIntoView();
 
@@ -82,7 +98,6 @@ export const Garden: React.FC = () => {
         <GardenUpgrade onClose={() => setShowUpgrade(false)} />
       </Modal>
 
-      <GardenHud isFarming location="farm" />
       <DirtRenderer island={"basic"} grid={gameGrid} />
 
       <div
@@ -108,6 +123,28 @@ export const Garden: React.FC = () => {
           }}
           className="cursor-pointer"
           onClick={() => setShowUpgrade(true)}
+        />
+      </MapPlacement>
+
+      <MapPlacement x={-1.5} y={6} height={4} width={4}>
+        <img
+          src={greenhouse}
+          className="absolute cursor-pointer hover:img-highlight"
+          style={{
+            width: `${PIXEL_SCALE * 78}px`,
+            bottom: `${PIXEL_SCALE * 2}px`,
+            left: `${PIXEL_SCALE * 0}px`,
+          }}
+          onClick={() => navigate("/garden/labratory")}
+        />
+        <img
+          src={lock}
+          className="absolute"
+          style={{
+            width: `${PIXEL_SCALE * 10}px`,
+            bottom: `${PIXEL_SCALE * 10}px`,
+            left: `${PIXEL_SCALE * 20}px`,
+          }}
         />
       </MapPlacement>
 

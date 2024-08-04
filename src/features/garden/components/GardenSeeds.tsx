@@ -16,6 +16,7 @@ import { useAppTranslation } from "lib/i18n/useAppTranslations";
 import React, { useContext, useState } from "react";
 
 import lock from "assets/icons/lock.png";
+import { SPROUTS } from "features/game/types/labPlants";
 
 export const GardenSeeds: React.FC = () => {
   const [selectedName, setSelectedName] = useState<SeedName>("Sunflower Seed");
@@ -62,7 +63,10 @@ export const GardenSeeds: React.FC = () => {
         <CraftingRequirements
           gameState={state}
           details={{
-            item: SEEDS()[selectedName].yield,
+            item:
+              selectedName in SPROUTS
+                ? selectedName
+                : SEEDS()[selectedName].yield,
           }}
           hideDescription
           requirements={{
@@ -93,6 +97,28 @@ export const GardenSeeds: React.FC = () => {
                   key={name}
                   onClick={() => onSeedClick(name)}
                   image={ITEM_DETAILS[SEEDS()[name].yield].image}
+                  showOverlay={isSeedLocked(name)}
+                  secondaryImage={isSeedLocked(name) ? lock : undefined}
+                />
+              ))}
+          </div>
+
+          <Label
+            icon={CROP_LIFECYCLE.Sunflower.crop}
+            type="default"
+            className="ml-2 mb-1"
+          >
+            {t("sprouts")}
+          </Label>
+          <div className="flex flex-wrap mb-2">
+            {seeds
+              .filter((name) => name in SPROUTS)
+              .map((name: SeedName) => (
+                <Box
+                  isSelected={selectedName === name}
+                  key={name}
+                  onClick={() => onSeedClick(name)}
+                  image={ITEM_DETAILS[name].image}
                   showOverlay={isSeedLocked(name)}
                   secondaryImage={isSeedLocked(name) ? lock : undefined}
                 />

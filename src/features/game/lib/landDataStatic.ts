@@ -21,7 +21,34 @@ export const INITIAL_RESOURCES: Pick<
   | "sunstones"
   | "beehives"
   | "oilReserves"
+  | "pots"
 > = {
+  pots: {
+    1: {
+      x: -2,
+      y: 0,
+    },
+    2: {
+      x: 0,
+      y: 0,
+    },
+    3: {
+      x: 2,
+      y: 0,
+    },
+    4: {
+      x: -2,
+      y: -2,
+    },
+    5: {
+      x: 0,
+      y: -2,
+    },
+    6: {
+      x: 2,
+      y: -2,
+    },
+  },
   crops: {
     1: {
       createdAt: Date.now(),

@@ -16,6 +16,7 @@ import {
 } from "./fruits";
 import { FLOWER_SEEDS, FlowerSeedName } from "./flowers";
 import { ResourceName } from "./resources";
+import { LabPlantName, SPROUTS } from "./labPlants";
 
 export type SeedName =
   | CropSeedName
@@ -35,7 +36,8 @@ export type Seed = {
     | FruitName
     | FlowerSeedName
     | GreenHouseCropName
-    | GreenHouseFruitName;
+    | GreenHouseFruitName
+    | LabPlantName;
   disabled?: boolean;
 };
 
@@ -45,4 +47,5 @@ export const SEEDS: () => Record<SeedName, Seed> = () => ({
   ...FLOWER_SEEDS(),
   ...GREENHOUSE_FRUIT_SEEDS(),
   ...GREENHOUSE_SEEDS(),
+  ...SPROUTS,
 });

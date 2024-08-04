@@ -340,8 +340,12 @@ import {
   upgradeGarden,
   UpgradeGardenAction,
 } from "./landExpansion/upgradeGarden";
+import { plantSprout, BuySproutAction } from "./landExpansion/buySprout";
+import { waterSprout, WaterSproutAction } from "./landExpansion/waterSprout";
 
 export type PlayingEvent =
+  | WaterSproutAction
+  | BuySproutAction
   | UpgradeGardenAction
   | OilGreenhouseAction
   | HarvestGreenhouseAction
@@ -505,6 +509,8 @@ type Handlers<T> = {
 };
 
 export const PLAYING_EVENTS: Handlers<PlayingEvent> = {
+  "sprout.watered": waterSprout,
+  "sprout.planted": plantSprout,
   "garden.upgraded": upgradeGarden,
   "faction.left": leaveFaction,
   "faction.prizeClaimed": claimFactionPrize,

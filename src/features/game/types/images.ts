@@ -8982,4 +8982,22 @@ export const ITEM_DETAILS: Items = {
       en: "",
     },
   },
+  "Mystery Sprout": {
+    image: rapidRoot,
+    description: {
+      en: "It's a mystery!",
+    },
+  },
+  "Wiggly Sprout": {
+    image: rapidRoot,
+    description: {
+      en: "It's a mystery!",
+    },
+  },
+  "Starflower Sprout": {
+    image: rapidRoot,
+    description: {
+      en: "It's a mystery!",
+    },
+  },
 };

@@ -351,6 +351,7 @@ export const INITIAL_FARM: GameState = {
   previousInventory: {},
   wardrobe: {},
   previousWardrobe: {},
+  pots: {},
 
   bumpkin: INITIAL_BUMPKIN,
 
@@ -571,6 +572,7 @@ export const TEST_FARM: GameState = {
     games: {},
     prizes: {},
   },
+  pots: {},
   kingdomChores: {
     chores: [],
     choresCompleted: 0,
@@ -851,6 +853,8 @@ export const EMPTY: GameState = {
     games: {},
     prizes: {},
   },
+  pots: {},
+
   previousInventory: {},
   chickens: {},
   stock: {},

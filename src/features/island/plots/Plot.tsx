@@ -28,7 +28,7 @@ import { ZoomContext } from "components/ZoomProvider";
 import { CROP_COMPOST } from "features/game/types/composters";
 import { gameAnalytics } from "lib/gameAnalytics";
 import { SUNNYSIDE } from "assets/sunnyside";
-import { SeedName } from "features/game/types/seeds";
+import { SeedName, SEEDS } from "features/game/types/seeds";
 import { getBumpkinLevel } from "features/game/lib/level";
 import { ModalContext } from "features/game/components/modal/ModalProvider";
 import { getKeys } from "features/game/types/craftables";
@@ -38,6 +38,8 @@ import { QuickSelect } from "features/greenhouse/QuickSelect";
 import { setPrecision } from "lib/utils/formatNumber";
 import Decimal from "decimal.js-light";
 import { hasFeatureAccess } from "lib/flags";
+import { getSellPrice } from "features/game/expansion/lib/boosts";
+import { getBuyPrice } from "features/game/events/landExpansion/seedBought";
 
 export function getYieldColour(yieldAmount: number) {
   if (yieldAmount < 2) {
@@ -179,15 +181,12 @@ export const Plot: React.FC<Props> = ({ id, index }) => {
       });
     }
 
-    harvested.current = crop;
-
-    if (showAnimations) {
-      setShowHarvested(true);
-
-      await new Promise((res) => setTimeout(res, 2000));
-
-      setShowHarvested(false);
-    }
+    const price = getSellPrice({
+      item: CROPS()[crop.name],
+      game: state,
+      now: new Date(),
+    });
+    showYield(price);
   };
 
   const onClick = (seed: SeedName = selectedItem as SeedName) => {
@@ -274,6 +273,9 @@ export const Plot: React.FC<Props> = ({ id, index }) => {
         openModal("BLACKSMITH");
       }
 
+      const price = getBuyPrice(seed, SEEDS()[seed], inventory, state);
+      showYield(price * -1);
+
       return;
     }
 
@@ -283,6 +285,16 @@ export const Plot: React.FC<Props> = ({ id, index }) => {
     }
 
     setTouchCount(0);
+  };
+
+  const showYield = async (amount: number) => {
+    harvested.current = { amount };
+
+    setShowHarvested(true);
+
+    await new Promise((res) => setTimeout(res, 2000));
+
+    setShowHarvested(false);
   };
 
   const onCollectReward = (success: boolean) => {
@@ -396,7 +408,7 @@ export const Plot: React.FC<Props> = ({ id, index }) => {
             style={{
               color: getYieldColour(harvested.current?.amount ?? 0),
             }}
-          >{`+${setPrecision(
+          >{`${harvested.current?.amount > 0 ? "+" : ""}${setPrecision(
             new Decimal(harvested.current?.amount ?? 0),
             2,
           )}`}</span>
